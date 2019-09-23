@@ -868,7 +868,7 @@ public class RealSmokeTest {
     }
     
     @Test
-    public void getArticleTranslationsMissing() throws Exception {
+    public void getMissingArticleTranslations() throws Exception {
         createClientWithTokenOrPassword();
         int articleCount = 0;
         for (Article art : instance.getArticles()) {
@@ -876,8 +876,8 @@ public class RealSmokeTest {
             if (++articleCount > 10) {
                 break; // Do not overwhelm the getArticles API
             }
-            List<String> articleTranslationsMissing = instance.getArticleTranslationsMissing(art.getId());
-            assertNotNull(articleTranslationsMissing);
+            List<String> missingArticleTranslations = instance.getMissingArticleTranslations(art.getId());
+            assertNotNull(missingArticleTranslations);
         }
     }
 
@@ -904,7 +904,7 @@ public class RealSmokeTest {
     }
     
     @Test
-    public void getSectionTranslationsMissing() throws Exception {
+    public void getMissingSectionTranslations() throws Exception {
         createClientWithTokenOrPassword();
         int sectionCount = 0;
         for (Section sect : instance.getSections()) {
@@ -912,8 +912,8 @@ public class RealSmokeTest {
             if (++sectionCount > 10) {
                 break; // Do not overwhelm the getSections API
             }
-            List<String> sectionTranslationsMissing = instance.getSectionTranslationsMissing(sect.getId());
-            assertNotNull(sectionTranslationsMissing);
+            List<String> missingSectionTranslations = instance.getMissingSectionTranslations(sect.getId());
+            assertNotNull(missingSectionTranslations);
         }
     }
 
@@ -940,7 +940,7 @@ public class RealSmokeTest {
     }
     
     @Test
-    public void getCategoryTranslationsMissing() throws Exception {
+    public void getMissingCategoryTranslations() throws Exception {
         createClientWithTokenOrPassword();
         int categoryCount = 0;
         for (Category cat : instance.getCategories()) {
@@ -948,8 +948,8 @@ public class RealSmokeTest {
             if (++categoryCount > 10) {
                 break; // Do not overwhelm the getCategories API
             }
-            List<String> categoryTranslationsMissing = instance.getCategoryTranslationsMissing(cat.getId());
-            assertNotNull(categoryTranslationsMissing);
+            List<String> missingCategoryTranslations = instance.getMissingCategoryTranslations(cat.getId());
+            assertNotNull(missingCategoryTranslations);
         }
     }
 

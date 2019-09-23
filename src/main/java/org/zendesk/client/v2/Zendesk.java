@@ -1662,7 +1662,7 @@ public class Zendesk implements Closeable {
                 handleList(Translation.class, "translations"));
     }
     
-    public List<String> getArticleTranslationsMissing(Long articleId) {
+    public List<String> getMissingArticleTranslations(Long articleId) {
     	return complete(submit(
                 req("GET", tmpl("/help_center/articles/{articleId}/translations/missing.json").set("articleId", articleId)),
                 handle(List.class, "locales")));
@@ -1731,7 +1731,7 @@ public class Zendesk implements Closeable {
                 handleList(Translation.class, "translations"));
     }
     
-    public List<String> getCategoryTranslationsMissing(Long categoryId) {
+    public List<String> getMissingCategoryTranslations(Long categoryId) {
     	return complete(submit(
                 req("GET", tmpl("/help_center/categories/{categoryId}/translations/missing.json").set("categoryId", categoryId)),
                 handle(List.class, "locales")));
@@ -1789,7 +1789,7 @@ public class Zendesk implements Closeable {
                 handleList(Translation.class, "translations"));
     }
     
-    public List<String> getSectionTranslationsMissing(Long sectionId) {
+    public List<String> getMissingSectionTranslations(Long sectionId) {
     	return complete(submit(
                 req("GET", tmpl("/help_center/sections/{sectionId}/translations/missing.json").set("sectionId", sectionId)),
                 handle(List.class, "locales")));
