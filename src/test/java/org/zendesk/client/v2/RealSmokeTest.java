@@ -866,6 +866,20 @@ public class RealSmokeTest {
             }
         }
     }
+    
+    @Test
+    public void getArticleTranslationsMissing() throws Exception {
+        createClientWithTokenOrPassword();
+        int articleCount = 0;
+        for (Article art : instance.getArticles()) {
+            assertNotNull(art.getId());
+            if (++articleCount > 10) {
+                break; // Do not overwhelm the getArticles API
+            }
+            List<String> articleTranslationsMissing = instance.getArticleTranslationsMissing(art.getId());
+            assertNotNull(articleTranslationsMissing);
+        }
+    }
 
     @Test
     public void getSectionTranslations() throws Exception {
@@ -888,6 +902,20 @@ public class RealSmokeTest {
             }
         }
     }
+    
+    @Test
+    public void getSectionTranslationsMissing() throws Exception {
+        createClientWithTokenOrPassword();
+        int sectionCount = 0;
+        for (Section sect : instance.getSections()) {
+            assertNotNull(sect.getId());
+            if (++sectionCount > 10) {
+                break; // Do not overwhelm the getSections API
+            }
+            List<String> sectionTranslationsMissing = instance.getSectionTranslationsMissing(sect.getId());
+            assertNotNull(sectionTranslationsMissing);
+        }
+    }
 
     @Test
     public void getCategoryTranslations() throws Exception {
@@ -908,6 +936,20 @@ public class RealSmokeTest {
                     return;
                 }
             }
+        }
+    }
+    
+    @Test
+    public void getCategoryTranslationsMissing() throws Exception {
+        createClientWithTokenOrPassword();
+        int categoryCount = 0;
+        for (Category cat : instance.getCategories()) {
+            assertNotNull(cat.getId());
+            if (++categoryCount > 10) {
+                break; // Do not overwhelm the getCategories API
+            }
+            List<String> categoryTranslationsMissing = instance.getCategoryTranslationsMissing(cat.getId());
+            assertNotNull(categoryTranslationsMissing);
         }
     }
 
