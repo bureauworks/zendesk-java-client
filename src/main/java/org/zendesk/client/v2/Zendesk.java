@@ -58,6 +58,7 @@ import org.zendesk.client.v2.model.dynamic.DynamicContentItemVariant;
 import org.zendesk.client.v2.model.hc.Article;
 import org.zendesk.client.v2.model.hc.ArticleAttachments;
 import org.zendesk.client.v2.model.hc.Category;
+import org.zendesk.client.v2.model.hc.Page;
 import org.zendesk.client.v2.model.hc.Section;
 import org.zendesk.client.v2.model.hc.Subscription;
 import org.zendesk.client.v2.model.hc.Translation;
@@ -1686,6 +1687,13 @@ public class Zendesk implements Closeable {
                 handle(List.class, "locales")));
     }
 
+    public Page<Article> getArticles(int page, int size) {
+    	PagedAsyncCompletionHandler<List<Article>> handleList = handleList(Article.class, "articles");
+    	List<Article> articles = complete(submit(
+                req("GET", tmpl("/help_center/articles.json?page={page}&per_page={size}").set("page", page).set("size", size)), handleList));
+    	return new Page<>(handleList.getNextPage(), handleList.getCount(), articles);
+    }
+    
     /**
      * Get all articles from help center.
      *
@@ -1778,6 +1786,13 @@ public class Zendesk implements Closeable {
     public void deleteArticleAttachment(long id) {
         complete(submit(req("DELETE", tmpl("/help_center/articles/attachments/{id}.json").set("id", id)), handleStatus()));
     }
+    
+    public Page<Category> getCategories(int page, int size) {
+    	PagedAsyncCompletionHandler<List<Category>> handleList = handleList(Category.class, "categories");
+    	List<Category> categories = complete(submit(
+                req("GET", tmpl("/help_center/categories.json?page={page}&per_page={size}").set("page", page).set("size", size)), handleList));
+    	return new Page<>(handleList.getNextPage(), handleList.getCount(), categories);
+    }
 
     public Iterable<Category> getCategories() {
         return new PagedIterable<>(cnst("/help_center/categories.json"),
@@ -1828,6 +1843,13 @@ public class Zendesk implements Closeable {
         checkHasId(category);
         complete(submit(req("DELETE", tmpl("/help_center/categories/{id}.json").set("id", category.getId())),
                 handleStatus()));
+    }
+    
+    public Page<Section> getSections(int page, int size) {
+    	PagedAsyncCompletionHandler<List<Section>> handleList = handleList(Section.class, "sections");
+    	List<Section> sections = complete(submit(
+                req("GET", tmpl("/help_center/sections.json?page={page}&per_page={size}").set("page", page).set("size", size)), handleList));
+    	return new Page<>(handleList.getNextPage(), handleList.getCount(), sections);
     }
 
     public Iterable<Section> getSections() {
@@ -2105,6 +2127,7 @@ public class Zendesk implements Closeable {
 
     private abstract class PagedAsyncCompletionHandler<T> extends ZendeskAsyncCompletionHandler<T> {
         private String nextPage;
+        private Long count;
 
         public void setPagedProperties(JsonNode responseNode, Class<?> clazz) {
             JsonNode node = responseNode.get(NEXT_PAGE);
@@ -2117,6 +2140,17 @@ public class Zendesk implements Closeable {
             } else {
                 this.nextPage = node.asText();
             }
+            
+            JsonNode nodeCount = responseNode.get(COUNT);
+            if (nodeCount == null) {
+                this.count = null;
+                if (logger.isDebugEnabled()) {
+                    logger.debug(COUNT + " property not found, pagination not supported" +
+                        (clazz != null ? " for " + clazz.getName() : ""));
+                }
+            } else {
+                this.count = nodeCount.asLong();
+            }
         }
 
         public String getNextPage() {
@@ -2126,6 +2160,14 @@ public class Zendesk implements Closeable {
         public void setNextPage(String nextPage) {
             this.nextPage = nextPage;
         }
+
+		public Long getCount() {
+			return count;
+		}
+
+		public void setCount(Long count) {
+			this.count = count;
+		}
     }
 
     private class PagedAsyncListCompletionHandler<T> extends PagedAsyncCompletionHandler<List<T>> {
