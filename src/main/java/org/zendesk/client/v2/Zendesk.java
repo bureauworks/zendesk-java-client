@@ -400,6 +400,14 @@ public class Zendesk implements Closeable {
         return new PagedIterable<>(tmpl("/help_center/articles/search.json{?query}").set("query", searchTerm),
                 handleList(Article.class, "results"));
     }
+    
+    public Page<Article> getArticleFromSearch(String searchTerm, int page, int size) {
+    	PagedAsyncCompletionHandler<List<Article>> handleList = handleList(Article.class, "results");
+    	List<Article> articles = complete(submit(
+                req("GET", tmpl("/help_center/articles/search.json{?query}&page={page}&per_page={size}")
+                		.set("query", searchTerm).set("page", page).set("size", size)), handleList));
+    	return new Page<>(handleList.getNextPage(), handleList.getCount(), articles);
+    }
 
     public Iterable<Article> getArticleFromSearch(String searchTerm, Long sectionId) {
         return new PagedIterable<>(tmpl("/help_center/articles/search.json{?section,query}")
