@@ -1,5 +1,6 @@
 package org.zendesk.client.v2.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,181 +8,191 @@ import java.util.List;
 
 /**
  * https://developer.zendesk.com/rest_api/docs/core/triggers
- * 
+ *
  * @author adavidson
  */
 public class Trigger implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-   private Long         id;
-   private String       title;
-   private boolean      active;
-   private int          position;
-   private Conditions   conditions;
-   private List<Action> actions;
-   private Date         createdAt;
-   private Date         updatedAt;
+  private Long id;
+  private String title;
+  private boolean active;
+  private int position;
+  private Conditions conditions;
+  private List<Action> actions;
 
-   public Long getId() {
-      return id;
-   }
+  @JsonProperty("created_at")
+  private Date createdAt;
 
-   public void setId(Long id) {
-      this.id = id;
-   }
+  @JsonProperty("updated_at")
+  private Date updatedAt;
 
-   public String getTitle() {
-      return title;
-   }
+  @JsonProperty("category_id")
+  private String categoryId;
 
-   public void setTitle(String title) {
-      this.title = title;
-   }
+  public Long getId() {
+    return id;
+  }
 
-   public boolean isActive() {
-      return active;
-   }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-   public void setActive(boolean active) {
-      this.active = active;
-   }
+  public String getCategoryId() {
+    return categoryId;
+  }
 
-   public Date getCreatedAt() {
-      return createdAt;
-   }
+  public void setCategoryId(String categoryId) {
+    this.categoryId = categoryId;
+  }
 
-   public void setCreatedAt(Date createdAt) {
-      this.createdAt = createdAt;
-   }
+  public String getTitle() {
+    return title;
+  }
 
-   public int getPosition() {
-      return position;
-   }
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
-   public void setPosition(int position) {
-      this.position = position;
-   }
+  public boolean isActive() {
+    return active;
+  }
 
-   public Conditions getConditions() {
-      return conditions;
-   }
+  public void setActive(boolean active) {
+    this.active = active;
+  }
 
-   public void setConditions(Conditions conditions) {
-      this.conditions = conditions;
-   }
+  public Date getCreatedAt() {
+    return createdAt;
+  }
 
-   public List<Action> getActions() {
-      return actions;
-   }
+  public void setCreatedAt(Date createdAt) {
+    this.createdAt = createdAt;
+  }
 
-   public void setActions(List<Action> actions) {
-      this.actions = actions;
-   }
+  public int getPosition() {
+    return position;
+  }
 
-   public Date getUpdatedAt() {
-      return updatedAt;
-   }
+  public void setPosition(int position) {
+    this.position = position;
+  }
 
-   public void setUpdatedAt(Date updatedAt) {
-      this.updatedAt = updatedAt;
-   }
+  public Conditions getConditions() {
+    return conditions;
+  }
 
-   @Override
-   public String toString() {
-      final StringBuilder sb = new StringBuilder();
-      sb.append("Trigger");
-      sb.append("{id=").append(id);
-      sb.append(", title=").append(title);
-      sb.append(", active=").append(active);
-      sb.append(", position=").append(position);
-      sb.append(", active=").append(active);
-      sb.append(", conditions=").append(conditions);
-      sb.append(", actions=").append(actions);
-      sb.append(", updatedAt=").append(updatedAt);
-      sb.append('}');
-      return sb.toString();
-   }
+  public void setConditions(Conditions conditions) {
+    this.conditions = conditions;
+  }
 
-   public static class Conditions {
-      private List<Condition> all = new ArrayList<>();
-      private List<Condition> any = new ArrayList<>();
+  public List<Action> getActions() {
+    return actions;
+  }
 
-      public List<Condition> getAll() {
-         return all;
-      }
+  public void setActions(List<Action> actions) {
+    this.actions = actions;
+  }
 
-      public void setAll(List<Condition> all) {
-         this.all = all;
-      }
+  public Date getUpdatedAt() {
+    return updatedAt;
+  }
 
-      public List<Condition> getAny() {
-         return any;
-      }
+  public void setUpdatedAt(Date updatedAt) {
+    this.updatedAt = updatedAt;
+  }
 
-      public void setAny(List<Condition> any) {
-         this.any = any;
-      }
+  @Override
+  public String toString() {
+    return "Trigger"
+        + "{id="
+        + id
+        + ", categoryId="
+        + categoryId
+        + ", title="
+        + title
+        + ", position="
+        + position
+        + ", active="
+        + active
+        + ", conditions="
+        + conditions
+        + ", actions="
+        + actions
+        + ", createdAt="
+        + createdAt
+        + ", updatedAt="
+        + updatedAt
+        + '}';
+  }
 
-      @Override
-      public String toString() {
-         final StringBuilder sb = new StringBuilder();
-         sb.append("Conditions");
-         sb.append("{all=").append(all);
-         sb.append(", any=").append(any);
-         sb.append('}');
-         return sb.toString();
-      }
-   }
+  public static class Conditions {
+    private List<Condition> all = new ArrayList<>();
+    private List<Condition> any = new ArrayList<>();
 
-   public static class Condition {
-      private String field;
-      private String operator;
-      private String value;
+    public List<Condition> getAll() {
+      return all;
+    }
 
-      public Condition() {}
+    public void setAll(List<Condition> all) {
+      this.all = all;
+    }
 
-      public Condition(String field, String operator, String value) {
-         this.field = field;
-         this.operator = operator;
-         this.value = value;
-      }
+    public List<Condition> getAny() {
+      return any;
+    }
 
-      public String getField() {
-         return field;
-      }
+    public void setAny(List<Condition> any) {
+      this.any = any;
+    }
 
-      public void setField(String field) {
-         this.field = field;
-      }
+    @Override
+    public String toString() {
+      return "Conditions" + "{all=" + all + ", any=" + any + '}';
+    }
+  }
 
-      public String getOperator() {
-         return operator;
-      }
+  public static class Condition {
+    private String field;
+    private String operator;
+    private String value;
 
-      public void setOperator(String operator) {
-         this.operator = operator;
-      }
+    public Condition() {}
 
-      public String getValue() {
-         return value;
-      }
+    public Condition(String field, String operator, String value) {
+      this.field = field;
+      this.operator = operator;
+      this.value = value;
+    }
 
-      public void setValue(String value) {
-         this.value = value;
-      }
+    public String getField() {
+      return field;
+    }
 
-      @Override
-      public String toString() {
-         final StringBuilder sb = new StringBuilder();
-         sb.append("Condition");
-         sb.append("{field=").append(field);
-         sb.append(", operator=").append(operator);
-         sb.append(", value=").append(value);
-         sb.append('}');
-         return sb.toString();
-      }
+    public void setField(String field) {
+      this.field = field;
+    }
 
-   }
+    public String getOperator() {
+      return operator;
+    }
 
+    public void setOperator(String operator) {
+      this.operator = operator;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    public void setValue(String value) {
+      this.value = value;
+    }
+
+    @Override
+    public String toString() {
+      return "Condition" + "{field=" + field + ", operator=" + operator + ", value=" + value + '}';
+    }
+  }
 }
