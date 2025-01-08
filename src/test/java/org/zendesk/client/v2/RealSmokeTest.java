@@ -2329,19 +2329,19 @@ public class RealSmokeTest {
     }
   }
 
-    @Test
-    public void getMissingArticleTranslations() throws Exception {
-        createClientWithTokenOrPassword();
-        int articleCount = 0;
-        for (Article art : instance.getArticles()) {
-            assertNotNull(art.getId());
-            if (++articleCount > 10) {
-                break; // Do not overwhelm the getArticles API
-            }
-            List<String> missingArticleTranslations = instance.getMissingArticleTranslations(art.getId());
-            assertNotNull(missingArticleTranslations);
-        }
+  @Test
+  public void getMissingArticleTranslations() throws Exception {
+    createClientWithTokenOrPassword();
+    int articleCount = 0;
+    for (Article art : instance.getArticles()) {
+      assertNotNull(art.getId());
+      if (++articleCount > 10) {
+        break; // Do not overwhelm the getArticles API
+      }
+      List<String> missingArticleTranslations = instance.getMissingArticleTranslations(art.getId());
+      assertNotNull(missingArticleTranslations);
     }
+  }
 
   @Test
   public void showArticleTranslation() throws Exception {
@@ -2398,19 +2398,20 @@ public class RealSmokeTest {
     }
   }
 
-    @Test
-    public void getMissingSectionTranslations() throws Exception {
-        createClientWithTokenOrPassword();
-        int sectionCount = 0;
-        for (Section sect : instance.getSections()) {
-            assertNotNull(sect.getId());
-            if (++sectionCount > 10) {
-                break; // Do not overwhelm the getSections API
-            }
-            List<String> missingSectionTranslations = instance.getMissingSectionTranslations(sect.getId());
-            assertNotNull(missingSectionTranslations);
-        }
+  @Test
+  public void getMissingSectionTranslations() throws Exception {
+    createClientWithTokenOrPassword();
+    int sectionCount = 0;
+    for (Section sect : instance.getSections()) {
+      assertNotNull(sect.getId());
+      if (++sectionCount > 10) {
+        break; // Do not overwhelm the getSections API
+      }
+      List<String> missingSectionTranslations =
+          instance.getMissingSectionTranslations(sect.getId());
+      assertNotNull(missingSectionTranslations);
     }
+  }
 
   @Test
   public void showSectionTranslation() throws Exception {
@@ -2467,19 +2468,20 @@ public class RealSmokeTest {
     }
   }
 
-    @Test
-    public void getMissingCategoryTranslations() throws Exception {
-        createClientWithTokenOrPassword();
-        int categoryCount = 0;
-        for (Category cat : instance.getCategories()) {
-            assertNotNull(cat.getId());
-            if (++categoryCount > 10) {
-                break; // Do not overwhelm the getCategories API
-            }
-            List<String> missingCategoryTranslations = instance.getMissingCategoryTranslations(cat.getId());
-            assertNotNull(missingCategoryTranslations);
-        }
+  @Test
+  public void getMissingCategoryTranslations() throws Exception {
+    createClientWithTokenOrPassword();
+    int categoryCount = 0;
+    for (Category cat : instance.getCategories()) {
+      assertNotNull(cat.getId());
+      if (++categoryCount > 10) {
+        break; // Do not overwhelm the getCategories API
+      }
+      List<String> missingCategoryTranslations =
+          instance.getMissingCategoryTranslations(cat.getId());
+      assertNotNull(missingCategoryTranslations);
     }
+  }
 
   @Test
   public void showCategoryTranslation() throws Exception {

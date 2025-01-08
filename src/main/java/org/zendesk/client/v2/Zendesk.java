@@ -89,8 +89,8 @@ import org.zendesk.client.v2.model.hc.ArticleAttachments;
 import org.zendesk.client.v2.model.hc.Category;
 import org.zendesk.client.v2.model.hc.ContentTag;
 import org.zendesk.client.v2.model.hc.Locales;
-import org.zendesk.client.v2.model.hc.PermissionGroup;
 import org.zendesk.client.v2.model.hc.Page;
+import org.zendesk.client.v2.model.hc.PermissionGroup;
 import org.zendesk.client.v2.model.hc.Section;
 import org.zendesk.client.v2.model.hc.Subscription;
 import org.zendesk.client.v2.model.hc.Translation;
@@ -559,13 +559,20 @@ public class Zendesk implements Closeable {
         handleList(Article.class, "results"));
   }
 
-    public Page<Article> getArticleFromSearch(String searchTerm, int page, int size) {
-    	PagedAsyncCompletionHandler<List<Article>> handleList = handleList(Article.class, "results");
-    	List<Article> articles = complete(submit(
-                req("GET", tmpl("/help_center/articles/search.json{?query}&page={page}&per_page={size}")
-                		.set("query", searchTerm).set("page", page).set("size", size)), handleList));
-    	return new Page<>(handleList.getNextPage(), handleList.getCount(), articles);
-    }
+  public Page<Article> getArticleFromSearch(String searchTerm, int page, int size) {
+    PagedAsyncCompletionHandler<List<Article>> handleList = handleList(Article.class, "results");
+    List<Article> articles =
+        complete(
+            submit(
+                req(
+                    "GET",
+                    tmpl("/help_center/articles/search.json{?query}&page={page}&per_page={size}")
+                        .set("query", searchTerm)
+                        .set("page", page)
+                        .set("size", size)),
+                handleList));
+    return new Page<>(handleList.getNextPage(), handleList.getCount(), articles);
+  }
 
   public Iterable<Article> getArticleFromSearch(String searchTerm, Long sectionId) {
     return new PagedIterable<>(
@@ -2902,19 +2909,27 @@ public class Zendesk implements Closeable {
   }
 
   public Page<Article> getArticles(int page, int size) {
-    	PagedAsyncCompletionHandler<List<Article>> handleList = handleList(Article.class, "articles");
-    	List<Article> articles = complete(submit(
-                req("GET", tmpl("/help_center/articles.json?page={page}&per_page={size}").set("page", page).set("size", size)), handleList));
-    	return new Page<>(handleList.getNextPage(), handleList.getCount(), articles);
-    }
+    PagedAsyncCompletionHandler<List<Article>> handleList = handleList(Article.class, "articles");
+    List<Article> articles =
+        complete(
+            submit(
+                req(
+                    "GET",
+                    tmpl("/help_center/articles.json?page={page}&per_page={size}")
+                        .set("page", page)
+                        .set("size", size)),
+                handleList));
+    return new Page<>(handleList.getNextPage(), handleList.getCount(), articles);
+  }
 
-    /**
-     * Get all articles from help center.
-     *
-     * @return List of Articles.
-     */
-    public Iterable<Article> getArticles() {
-        return new PagedIterable<>(cbp("/help_center/articles.json"), handleList(Article.class, "articles"));
+  /**
+   * Get all articles from help center.
+   *
+   * @return List of Articles.
+   */
+  public Iterable<Article> getArticles() {
+    return new PagedIterable<>(
+        cbp("/help_center/articles.json"), handleList(Article.class, "articles"));
   }
 
   public Iterable<Article> getArticles(String locale) {
@@ -2983,9 +2998,13 @@ public class Zendesk implements Closeable {
   }
 
   public List<String> getMissingArticleTranslations(Long articleId) {
-      return complete(submit(
-              req("GET", tmpl("/help_center/articles/{articleId}/translations/missing.json").set("articleId", articleId)),
-              handle(List.class, "locales")));
+    return complete(
+        submit(
+            req(
+                "GET",
+                tmpl("/help_center/articles/{articleId}/translations/missing.json")
+                    .set("articleId", articleId)),
+            handle(List.class, "locales")));
   }
 
   public Translation showArticleTranslation(long articleId, String locale) {
@@ -3120,12 +3139,20 @@ public class Zendesk implements Closeable {
             handleStatus()));
   }
 
-    public Page<Category> getCategories(int page, int size) {
-    	PagedAsyncCompletionHandler<List<Category>> handleList = handleList(Category.class, "categories");
-    	List<Category> categories = complete(submit(
-                req("GET", tmpl("/help_center/categories.json?page={page}&per_page={size}").set("page", page).set("size", size)), handleList));
-    	return new Page<>(handleList.getNextPage(), handleList.getCount(), categories);
-    }
+  public Page<Category> getCategories(int page, int size) {
+    PagedAsyncCompletionHandler<List<Category>> handleList =
+        handleList(Category.class, "categories");
+    List<Category> categories =
+        complete(
+            submit(
+                req(
+                    "GET",
+                    tmpl("/help_center/categories.json?page={page}&per_page={size}")
+                        .set("page", page)
+                        .set("size", size)),
+                handleList));
+    return new Page<>(handleList.getNextPage(), handleList.getCount(), categories);
+  }
 
   public Iterable<Category> getCategories() {
     return new PagedIterable<>(
@@ -3147,9 +3174,13 @@ public class Zendesk implements Closeable {
   }
 
   public List<String> getMissingCategoryTranslations(Long categoryId) {
-      return complete(submit(
-              req("GET", tmpl("/help_center/categories/{categoryId}/translations/missing.json").set("categoryId", categoryId)),
-              handle(List.class, "locales")));
+    return complete(
+        submit(
+            req(
+                "GET",
+                tmpl("/help_center/categories/{categoryId}/translations/missing.json")
+                    .set("categoryId", categoryId)),
+            handle(List.class, "locales")));
   }
 
   public Translation showCategoryTranslation(long categoryId, String locale) {
@@ -3221,12 +3252,19 @@ public class Zendesk implements Closeable {
             handleStatus()));
   }
 
-    public Page<Section> getSections(int page, int size) {
-    	PagedAsyncCompletionHandler<List<Section>> handleList = handleList(Section.class, "sections");
-    	List<Section> sections = complete(submit(
-                req("GET", tmpl("/help_center/sections.json?page={page}&per_page={size}").set("page", page).set("size", size)), handleList));
-    	return new Page<>(handleList.getNextPage(), handleList.getCount(), sections);
-    }
+  public Page<Section> getSections(int page, int size) {
+    PagedAsyncCompletionHandler<List<Section>> handleList = handleList(Section.class, "sections");
+    List<Section> sections =
+        complete(
+            submit(
+                req(
+                    "GET",
+                    tmpl("/help_center/sections.json?page={page}&per_page={size}")
+                        .set("page", page)
+                        .set("size", size)),
+                handleList));
+    return new Page<>(handleList.getNextPage(), handleList.getCount(), sections);
+  }
 
   public Iterable<Section> getSections() {
     return new PagedIterable<>(
@@ -3253,11 +3291,15 @@ public class Zendesk implements Closeable {
         handleList(Translation.class, "translations"));
   }
 
-    public List<String> getMissingSectionTranslations(Long sectionId) {
-        return complete(submit(
-                req("GET", tmpl("/help_center/sections/{sectionId}/translations/missing.json").set("sectionId", sectionId)),
-                handle(List.class, "locales")));
-    }
+  public List<String> getMissingSectionTranslations(Long sectionId) {
+    return complete(
+        submit(
+            req(
+                "GET",
+                tmpl("/help_center/sections/{sectionId}/translations/missing.json")
+                    .set("sectionId", sectionId)),
+            handle(List.class, "locales")));
+  }
 
   public Translation showSectionTranslation(long sectionId, String locale) {
     return complete(
@@ -3644,7 +3686,7 @@ public class Zendesk implements Closeable {
 
   private abstract class PagedAsyncCompletionHandler<T> extends ZendeskAsyncCompletionHandler<T> {
     private String nextPage;
-        private Long count;
+    private Long count;
 
     public void setPagedProperties(JsonNode responseNode, Class<?> clazz) {
       JsonNode node = responseNode.get(CURSOR_LINKS);
@@ -3663,39 +3705,41 @@ public class Zendesk implements Closeable {
               NEXT_PAGE
                   + " property not found, pagination not supported"
                   + (clazz != null ? " for " + clazz.getName() : ""));
-                }
-            } else {
-                this.nextPage = node.asText();
-            }
-
-            JsonNode nodeCount = responseNode.get(COUNT);
-            if (nodeCount == null) {
-                this.count = null;
-                if (logger.isDebugEnabled()) {
-                    logger.debug(COUNT + " property not found, pagination not supported" +
-                        (clazz != null ? " for " + clazz.getName() : ""));
-                }
-            } else {
-                this.count = nodeCount.asLong();
-            }
         }
+      } else {
+        this.nextPage = node.asText();
+      }
+
+      JsonNode nodeCount = responseNode.get(COUNT);
+      if (nodeCount == null) {
+        this.count = null;
+        if (logger.isDebugEnabled()) {
+          logger.debug(
+              COUNT
+                  + " property not found, pagination not supported"
+                  + (clazz != null ? " for " + clazz.getName() : ""));
+        }
+      } else {
+        this.count = nodeCount.asLong();
+      }
+    }
 
     public String getNextPage() {
       return nextPage;
     }
 
-        public void setNextPage(String nextPage) {
-            this.nextPage = nextPage;
-        }
-
-		public Long getCount() {
-			return count;
-		}
-
-		public void setCount(Long count) {
-			this.count = count;
-		}
+    public void setNextPage(String nextPage) {
+      this.nextPage = nextPage;
     }
+
+    public Long getCount() {
+      return count;
+    }
+
+    public void setCount(Long count) {
+      this.count = count;
+    }
+  }
 
   private class PagedAsyncListCompletionHandler<T> extends PagedAsyncCompletionHandler<List<T>> {
     private final Class<T> clazz;
