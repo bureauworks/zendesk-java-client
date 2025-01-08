@@ -8,25 +8,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class CommentPrivacyChangeEvent extends PublicPrivateEvent {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    private Long commentId;
+  private Long commentId;
 
-    @JsonProperty("comment_id")
-    public Long getCommentId() {
-        return commentId;
-    }
+  @JsonProperty("comment_id")
+  public Long getCommentId() {
+    return commentId;
+  }
 
-    public void setCommentId(Long commentId) {
-        this.commentId = commentId;
-    }
+  public void setCommentId(Long commentId) {
+    this.commentId = commentId;
+  }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append("CommentPrivacyChangeEvent");
-        sb.append("{commentId=").append(commentId);
-        sb.append('}');
-        return sb.toString();
-    }
+  @Override
+  public String toString() {
+    return "CommentPrivacyChangeEvent" + "{commentId=" + commentId + '}';
+  }
 }

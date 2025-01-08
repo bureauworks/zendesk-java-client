@@ -8,60 +8,62 @@ import java.util.List;
  */
 public class Attachment extends Photo {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    private List<Photo> thumbnails;
+  private List<Photo> thumbnails;
 
-    public List<Photo> getThumbnails() {
-        return thumbnails;
+  public List<Photo> getThumbnails() {
+    return thumbnails;
+  }
+
+  public void setThumbnails(List<Photo> thumbnails) {
+    this.thumbnails = thumbnails;
+  }
+
+  @Override
+  public String toString() {
+    return "Attachment"
+        + "{id="
+        + getId()
+        + ", fileName='"
+        + getFileName()
+        + '\''
+        + ", contentType='"
+        + getContentType()
+        + '\''
+        + ", contentUrl='"
+        + getContentUrl()
+        + '\''
+        + ", size="
+        + getSize()
+        + ", thumbnails="
+        + thumbnails
+        + '}';
+  }
+
+  public static class Upload {
+    private String token;
+    private List<Attachment> attachments;
+
+    public String getToken() {
+      return token;
     }
 
-    public void setThumbnails(List<Photo> thumbnails) {
-        this.thumbnails = thumbnails;
+    public void setToken(String token) {
+      this.token = token;
+    }
+
+    public List<Attachment> getAttachments() {
+      return attachments;
+    }
+
+    public void setAttachments(List<Attachment> attachments) {
+      this.attachments = attachments;
     }
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append("Attachment");
-        sb.append("{id=").append(getId());
-        sb.append(", fileName='").append(getFileName()).append('\'');
-        sb.append(", contentType='").append(getContentType()).append('\'');
-        sb.append(", contentUrl='").append(getContentUrl()).append('\'');
-        sb.append(", size=").append(getSize());
-        sb.append(", thumbnails=").append(thumbnails);
-        sb.append('}');
-        return sb.toString();
+      return "Upload" + "{token='" + token + '\'' + ", attachments=" + attachments + '}';
     }
-
-    public static class Upload {
-        private String token;
-        private List<Attachment> attachments;
-
-        public String getToken() {
-            return token;
-        }
-
-        public void setToken(String token) {
-            this.token = token;
-        }
-
-        public List<Attachment> getAttachments() {
-            return attachments;
-        }
-
-        public void setAttachments(List<Attachment> attachments) {
-            this.attachments = attachments;
-        }
-
-        @Override
-        public String toString() {
-            final StringBuilder sb = new StringBuilder();
-            sb.append("Upload");
-            sb.append("{token='").append(token).append('\'');
-            sb.append(", attachments=").append(attachments);
-            sb.append('}');
-            return sb.toString();
-        }
-    }
+  }
 }
